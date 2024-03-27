@@ -1,9 +1,10 @@
 import { useState } from "react";
 import server from "./server";
 
-function Transfer({ address, setBalance }) {
+function Transfer({ address, setBalance, privateKey }) {
   const [sendAmount, setSendAmount] = useState("");
   const [recipient, setRecipient] = useState("");
+  console.log(privateKey)
 
   const setValue = (setter) => (evt) => setter(evt.target.value);
 
@@ -16,6 +17,8 @@ function Transfer({ address, setBalance }) {
       } = await server.post(`send`, {
         sender: address,
         amount: parseInt(sendAmount),
+        privateKey: privateKey,
+        message: sendAmount,
         recipient,
       });
       setBalance(balance);
